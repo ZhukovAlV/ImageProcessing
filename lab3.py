@@ -40,11 +40,11 @@ if (mode == 2): # Выбор объекта по цвету
     cv2.imshow('Test', result)
     cv2.waitKey(0)
 if (mode == 3): # Обнаружение глаз и рта
-    img = cv2.imread('camera.jpg')
+    img = cv2.imread("camera.jpg")
     cv2.imshow('img', img)
-    face_cascade = cv2.CascadeClassifier(r'./haarcascade_frontalface_default.xml')
-    eye_cascade = cv2.CascadeClassifier(r'./haarcascade_eye.xml')
-    smile_cascade = cv2.CascadeClassifier(r'./haarcascade_smile.xml')
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+    smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile.xml')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
@@ -64,4 +64,19 @@ if (mode == 3): # Обнаружение глаз и рта
     cv2.imshow('Test', img)
     cv2.waitKey(0)
     cv2.imwrite('output.jpg', img)
+if (mode == 4): # Оттенки цвета, выбранного пользователем на изображении
+    im = array(Image.open('camera.jpg'))
+    imshow(im)
+    print('Click 1 times')
+    coords = ginput(1)[0]
+
+    img = cv2.imread('camera.jpg')
+    hsv_img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    hsv_pt = hsv_img[int(coords[1]), int(coords[0])]
+    hsv_min = (hsv_pt * 0.9).astype('uint8')
+    hsv_max = (hsv_pt * 1.1).astype('uint8')
+    result = cv2.inRange(hsv_img, hsv_min, hsv_max)
+    cv2.imshow('Test', result)
+    cv2.waitKey(0)
+
 
