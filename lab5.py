@@ -60,7 +60,7 @@ IMAGE_SIZE = (12, 8)
 
 
 with detection_graph.as_default():
-  with tf.Session(graph=detection_graph) as sess:
+  with tf.compat.v1.Session(graph=detection_graph) as sess:
     while True:
       ret, image_np = cap.read()
       # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
