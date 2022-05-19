@@ -16,8 +16,8 @@ cap = cv2.VideoCapture(1)
 
 sys.path.append("..")
 
-from object_detection.utils import label_map_util
-from object_detection.utils import visualization_utils as vis_util
+from utils import label_map_util
+from utils import visualization_utils as vis_util
 
 MODEL_NAME = 'ssd_mobilenet_v1_coco_11_06_2017'
 MODEL_FILE = MODEL_NAME + '.tar.gz'
@@ -38,7 +38,7 @@ for file in tar_file.getmembers():
 detection_graph = tf.Graph()
 with detection_graph.as_default():
   od_graph_def = tf.compat.v1.GraphDef()
-  with tf.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
+  with tf.compat.v2.io.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
     serialized_graph = fid.read()
     od_graph_def.ParseFromString(serialized_graph)
     tf.import_graph_def(od_graph_def, name='')
